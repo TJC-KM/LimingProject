@@ -1,29 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Warm Theme Index</title>
+    <title>個人工作管理系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            background-color: #FFD54F; /* amber */
-            color: #6D4C41; /* brown */
-            font-family: Arial, sans-serif;
-        }
-        h1, h2, h3 {
-            color: #FF9800; /* orange */
-        }
-        a {
-            color: #A0522D; /* brown-orange */
-            text-decoration: none;
-        }
-        a:hover {
-            color: #FF5722; /* deep orange */
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-link.active { background-color: #eff6ff; color: #1d4ed8; border-right: 4px solid #1d4ed8; }
     </style>
 </head>
-<body>
-    <h1>Welcome to My Warm Themed Page</h1>
-    <p>This page incorporates warm tones like amber, orange, and brown.</p>
+<body class="bg-slate-50 text-slate-800">
+
+    <div class="flex min-h-screen">
+        <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
+            <div class="p-6">
+                <h1 class="text-xl font-bold text-blue-600 tracking-tight">工作管理系統</h1>
+                <p class="text-xs text-slate-400 mt-1">Personal Workspace v2.0</p>
+            </div>
+            
+            <nav class="flex-1 px-4 space-y-1">
+                <button onclick="showTab('home')" class="nav-link active w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all">
+                    <i class="fa-solid fa-house mr-3 w-5"></i> 首頁
+                </button>
+                <button onclick="showTab('hardware')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                    <i class="fa-solid fa-microchip mr-3 w-5"></i> 硬體操作
+                </button>
+                <button onclick="showTab('software')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                    <i class="fa-solid fa-code mr-3 w-5"></i> 軟體操作
+                </button>
+                <button onclick="showTab('future')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                    <i class="fa-solid fa-rocket mr-3 w-5"></i> 未來計畫
+                </button>
+                <button onclick="showTab('links')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                    <i class="fa-solid fa-link mr-3 w-5"></i> 其他連結
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-slate-100 text-xs text-slate-400">
+                Logged in as: User
+            </div>
+        </aside>
+
+        <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+            
+            <section id="home" class="tab-content active space-y-8">
+                <header>
+                    <h2 class="text-3xl font-bold">歡迎回來，這是你的工作概覽</h2>
+                    <p class="text-slate-500 mt-2">今天是 2026年4月16日</p>
+                </header>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-blue-600 text-white p-8 rounded-3xl shadow-lg shadow-blue-200">
+                        <h3 class="text-lg opacity-80">當前重點任務</h3>
+                        <p class="text-2xl font-bold mt-2">Case Management 優化</p>
+                        <div class="mt-6 bg-blue-500 rounded-full h-2 w-full">
+                            <div class="bg-white h-2 rounded-full w-3/4"></div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <h3 class="text-slate-500 font-bold text-sm uppercase">今日 Todo</h3>
+                        <ul class="mt-4 space-y-3">
+                            <li class="flex items-center"><i class="fa-regular fa-circle-check text-green-500 mr-2"></i> 檢查網頁模板佈局</li>
+                            <li class="flex items-center"><i class="fa-regular fa-circle text-slate-300 mr-2"></i> 更新硬體設定手冊</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hardware" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold">硬體操作指南</h2>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-lg mb-4 text-blue-600 underline">監視器系統設定</h3>
+                    <p class="text-slate-600 mb-4">關於 Deco X20 與 40 台攝影機的連線設定步驟：</p>
+                    <ol class="list-decimal list-inside space-y-2 text-slate-700">
+                        <li>確認 IP 分配範圍（建議保留靜態 IP）</li>
+                        <li>檢查各樓層 Mesh 節點訊號強度</li>
+                        <li>進入後台查看攝影機即時流狀態</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="software" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold">軟體開發與操作</h2>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 font-mono">
+                    <p class="text-slate-500 mb-2">// 啟動專案指令</p>
+                    <div class="bg-slate-800 text-emerald-400 p-4 rounded-xl">
+                        pnpm turbo run dev --filter=case-management
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h3 class="font-bold mb-2 text-blue-600">Google Sheets API 串接提醒</h3>
+                    <p class="text-slate-600 text-sm">部署 GAS 時務必設定為「所有人（含匿名）」權限方能讓 HTML 抓取資料。</p>
+                </div>
+            </section>
+
+            <section id="future" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold text-orange-600">未來計畫 / Roadmap</h2>
+                <div class="relative border-l-2 border-slate-200 ml-4 pl-6 space-y-8">
+                    <div class="relative">
+                        <div class="absolute -left-[31px] top-1 bg-orange-500 h-4 w-4 rounded-full border-4 border-white"></div>
+                        <h4 class="font-bold">2026年5月：日本大阪旅遊</h4>
+                        <p class="text-sm text-slate-500">6天5夜，重點在於放鬆與考察在地數位應用。</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[31px] top-1 bg-slate-300 h-4 w-4 rounded-full border-4 border-white"></div>
+                        <h4 class="font-bold">2026下半年：自動化工作流系統完整版</h4>
+                        <p class="text-sm text-slate-500">將 Google 表單、試算表與此 HTML 儀表板完全連動。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="links" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">快速連結</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
+                        <i class="fa-brands fa-github text-2xl mb-2"></i>
+                        <div class="text-sm">GitHub Repo</div>
+                    </a>
+                    <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
+                        <i class="fa-solid fa-table text-2xl mb-2 text-green-600"></i>
+                        <div class="text-sm">Google Sheets</div>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // 隱藏所有內容
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            // 取消所有導航按鈕的 active 樣式
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // 顯示點選的內容
+            document.getElementById(tabId).classList.add('active');
+            // 將點選的按鈕設為 active
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
