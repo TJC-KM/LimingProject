@@ -121,11 +121,11 @@
                         <p class="text-3xl font-bold mt-4">上傳功能進階版 (Vite)</p>
                         <div class="mt-8">
                             <div class="flex justify-between text-sm mb-2 font-bold">
-                                <span>總體進度</span>
-                                <span>81%</span>
+                                <span>功能完成度</span>
+                                <span>85%</span>
                             </div>
                             <div class="bg-white/20 rounded-full h-3 w-full">
-                                <div class="bg-white h-3 rounded-full w-[81%] shadow-[0_0_15px_rgba(255,255,255,0.5)]"></div>
+                                <div class="bg-white h-3 rounded-full w-[85%] shadow-[0_0_15px_rgba(255,255,255,0.5)]"></div>
                             </div>
                         </div>
                     </div>
@@ -152,52 +152,60 @@
                 <header class="flex justify-between items-end">
                     <div>
                         <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">發展藍圖</h2>
-                        <p class="text-slate-500 mt-2 font-medium">Roadmap & Future Goals</p>
+                        <p class="text-slate-500 mt-2 font-medium">Roadmap & Goals</p>
                     </div>
                     <span class="bg-orange-100 text-orange-600 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase">Development</span>
                 </header>
 
-                <div class="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-50 relative">
-                    <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-slate-200/50 border border-slate-50 relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row gap-8 items-start relative z-10">
                         <div class="w-16 h-16 bg-blue-600 rounded-[1.5rem] flex items-center justify-center text-white text-2xl shadow-xl shadow-blue-100">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                         </div>
                         <div class="flex-1">
                             <h3 class="text-2xl font-bold text-slate-900">上傳功能進階版</h3>
-                            <p class="text-blue-500 font-bold text-sm mt-1 uppercase tracking-wider">目標：提供極致美觀的雲端檔案管理介面</p>
+                            <p class="text-blue-500 font-bold text-sm mt-1 uppercase tracking-wider">目標：取代原有 Google 雲端，提供更直覺且美觀的管理介面</p>
                             
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-10 mt-12">
                                 <div>
                                     <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 已完成項目
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 已完成項目 (Checked)
                                     </h4>
-                                    <ul class="space-y-4">
-                                        <li class="flex items-start gap-3 text-slate-400 line-through text-sm italic font-medium">
-                                            <i class="fa-solid fa-check-double text-emerald-500 mt-1"></i>
-                                            讀出雲端資料、密碼登入、影音元件預覽
+                                    <ul class="space-y-3">
+                                        <li class="flex items-start gap-3 text-slate-400 line-through text-xs font-medium">
+                                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+                                            <span>讀出 Google 雲端資料、輸入密碼登入</span>
                                         </li>
-                                        <li class="flex items-start gap-3 text-slate-400 line-through text-sm italic font-medium">
-                                            <i class="fa-solid fa-check-double text-emerald-500 mt-1"></i>
-                                            新增、改名、刪除移動、雲端連結串接
+                                        <li class="flex items-start gap-3 text-slate-400 line-through text-xs font-medium">
+                                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+                                            <span>圖片影片專用元件預覽、新增檔案與資料夾</span>
                                         </li>
-                                        <li class="flex items-start gap-3 text-slate-400 line-through text-sm italic font-medium">
-                                            <i class="fa-solid fa-check-double text-emerald-500 mt-1"></i>
-                                            類別設定檔化、網址結構優化
+                                        <li class="flex items-start gap-3 text-slate-400 line-through text-xs font-medium">
+                                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+                                            <span>改檔名、刪除改為移動至指定資料夾</span>
+                                        </li>
+                                        <li class="flex items-start gap-3 text-slate-400 line-through text-xs font-medium">
+                                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+                                            <span>開啟 Google 雲端連結、新增常用類別</span>
+                                        </li>
+                                        <li class="flex items-start gap-3 text-slate-400 line-through text-xs font-medium">
+                                            <i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i>
+                                            <span>類別改為設定檔模式、改網址優化</span>
                                         </li>
                                     </ul>
                                 </div>
                                 <div>
                                     <h4 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> 開發中
+                                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> 進行中項目 (Todo)
                                     </h4>
-                                    <div class="space-y-3">
-                                        <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl flex items-center gap-4">
+                                    <div class="space-y-4">
+                                        <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl flex items-center gap-4 hover:bg-blue-50 transition-colors">
                                             <i class="fa-regular fa-square text-blue-400 text-lg"></i>
                                             <span class="text-sm font-bold text-slate-700">切換圖片預覽模式</span>
                                         </div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl flex items-center gap-4">
+                                        <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl flex items-center gap-4 hover:bg-blue-50 transition-colors">
                                             <i class="fa-regular fa-square text-blue-400 text-lg"></i>
-                                            <span class="text-sm font-bold text-slate-700">串接 Line 發送訊息通知</span>
+                                            <span class="text-sm font-bold text-slate-700">串接 Line 發送訊息功能</span>
                                         </div>
                                     </div>
                                 </div>
@@ -207,84 +215,64 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-emerald-200 hover:shadow-lg transition-all">
-                        <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center text-xl mb-6">
+                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-emerald-200 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all">
                             <i class="fa-brands fa-line"></i>
                         </div>
-                        <h4 class="font-bold text-lg mb-2">Line 訊息整合</h4>
-                        <p class="text-xs text-slate-400 font-medium leading-relaxed">自動化通知系統開發。計畫整合 Line Notify 以實現檔案異動即時提醒。</p>
+                        <h4 class="font-bold text-lg mb-2">Line 發訊息</h4>
+                        <p class="text-xs text-slate-400 font-medium leading-relaxed italic">待細化：自動化通知系統與自定義訊息排程功能開發。</p>
                     </div>
-                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-violet-200 hover:shadow-lg transition-all">
-                        <div class="w-12 h-12 bg-violet-50 text-violet-500 rounded-xl flex items-center justify-center text-xl mb-6">
-                            <i class="fa-solid fa-feather-pointed"></i>
+                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-violet-200 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                        <div class="w-12 h-12 bg-violet-50 text-violet-500 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-violet-500 group-hover:text-white transition-all">
+                            <i class="fa-solid fa-people-group"></i>
                         </div>
-                        <h4 class="font-bold text-lg mb-2">聚會筆記模組</h4>
-                        <p class="text-xs text-slate-400 font-medium leading-relaxed">活動紀錄與後勤支援。計畫建立快速輸入介面，整合活動照片與行程。</p>
+                        <h4 class="font-bold text-lg mb-2">聚會筆記</h4>
+                        <p class="text-xs text-slate-400 font-medium leading-relaxed italic">待細化：群體活動紀錄與後勤支援資料整合，提供快速索引。</p>
                     </div>
-                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-blue-200 hover:shadow-lg transition-all">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-xl mb-6">
+                    <div class="bg-white p-8 rounded-[2rem] border border-slate-100 hover:border-blue-200 hover:shadow-xl hover:-translate-y-1 transition-all group">
+                        <div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex items-center justify-center text-xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all">
                             <i class="fa-solid fa-circle-info"></i>
                         </div>
-                        <h4 class="font-bold text-lg mb-2">系統功能介紹</h4>
-                        <p class="text-xs text-slate-400 font-medium leading-relaxed">針對現有功能的完整導覽。計畫使用動畫或導覽元件提升使用者體驗。</p>
+                        <h4 class="font-bold text-lg mb-2">功能介紹</h4>
+                        <p class="text-xs text-slate-400 font-medium leading-relaxed italic">待細化：針對現有系統功能的互動式導覽與動態說明頁面。</p>
                     </div>
                 </div>
             </section>
 
-            <section id="hardware" class="tab-content space-y-6">
-                <h2 class="text-3xl font-bold">硬體操作庫</h2>
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100">
-                    <h3 class="font-bold text-blue-600 mb-4 underline">監視器系統設定</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Deco X20 與 40 台攝影機的連線設定步驟與 IP 分配管理。</p>
-                </div>
+            <section id="hardware" class="tab-content">
+                <h2 class="text-3xl font-bold mb-8">硬體設施操作</h2>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100">內容載入中...</div>
             </section>
-
-            <section id="software-basic" class="tab-content space-y-6">
-                <h2 class="text-3xl font-bold">軟體開發 (初級)</h2>
-                <div class="bg-slate-900 rounded-[2rem] p-8 shadow-2xl relative">
-                    <div class="flex gap-1.5 mb-4">
-                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <code class="text-emerald-400 text-sm font-mono block">pnpm turbo run dev --filter=case-management</code>
-                </div>
+            <section id="software-basic" class="tab-content">
+                <h2 class="text-3xl font-bold mb-8 text-emerald-600">軟體開發 (初級)</h2>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100">內容載入中...</div>
             </section>
-            
-            <section id="software-deep" class="tab-content space-y-6">
-                <h2 class="text-3xl font-bold text-violet-600">軟體開發 (進階)</h2>
-                <div class="bg-white p-8 rounded-[2rem] border border-slate-100">
-                    <p class="text-slate-600">進階開發與架構筆記存放區...</p>
-                </div>
+            <section id="software-deep" class="tab-content">
+                <h2 class="text-3xl font-bold mb-8 text-violet-600">軟體開發 (進階)</h2>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100">內容載入中...</div>
             </section>
-
-            <section id="links" class="tab-content space-y-10">
-                <h2 class="text-3xl font-bold">資源導航</h2>
+            <section id="links" class="tab-content">
+                <h2 class="text-3xl font-bold mb-8 text-sky-600">外部資源連結</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <a href="https://github.com" target="_blank" class="bg-white p-6 rounded-3xl border border-slate-100 flex flex-col items-center gap-3 hover:-translate-y-1 transition-all">
-                        <i class="fa-brands fa-github text-3xl"></i>
-                        <span class="text-xs font-bold">GitHub</span>
+                    <a href="#" class="bg-white p-8 rounded-3xl border border-slate-100 flex flex-col items-center gap-4 hover:shadow-lg transition-all">
+                        <i class="fa-brands fa-github text-4xl"></i>
+                        <span class="font-bold text-sm">GitHub</span>
                     </a>
                 </div>
             </section>
-
         </main>
     </div>
 
     <script>
         function showTab(tabId) {
-            // 切換內容
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             const target = document.getElementById(tabId);
             if(target) target.classList.add('active');
             
-            // 切換按鈕樣式
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            // 透過文字或 ID 尋找並啟動按鈕
-            const buttons = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
-            buttons.forEach(b => b.classList.add('active'));
+            const activeLinks = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
+            activeLinks.forEach(link => link.classList.add('active'));
 
-            // 手機版自動收起
             if (window.innerWidth < 768) {
                 const sidebar = document.getElementById('mobile-sidebar');
                 if (sidebar.classList.contains('sidebar-open')) toggleMobileMenu();
