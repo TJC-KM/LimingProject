@@ -81,46 +81,33 @@
             
             <section id="home" class="tab-content active space-y-8">
                 <header>
-                    <h2 class="text-3xl font-bold">歡迎回來，這是你的工作概覽</h2>
+                    <h2 class="text-3xl font-bold">工作概覽</h2>
                     <p class="text-slate-500 mt-2">今天是 2026年4月17日</p>
                 </header>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-blue-600 text-white p-8 rounded-3xl shadow-lg shadow-blue-200">
-                        <h3 class="text-lg opacity-80">當前重點任務</h3>
-                        <p class="text-2xl font-bold mt-2">Case Management 優化</p>
+                        <h3 class="text-lg opacity-80 font-medium">進行中專案</h3>
+                        <p class="text-2xl font-bold mt-2">功能開發與優化</p>
                         <div class="mt-6 bg-blue-500 rounded-full h-2 w-full">
-                            <div class="bg-white h-2 rounded-full w-[81%]"></div>
+                            <div class="bg-white h-2 rounded-full w-[85%]"></div>
                         </div>
-                    </div>
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <h3 class="text-slate-500 font-bold text-sm uppercase">今日 Todo</h3>
-                        <ul class="mt-4 space-y-3">
-                            <li class="flex items-center"><i class="fa-regular fa-circle-check text-green-500 mr-2"></i> 檢查網頁模板佈局</li>
-                            <li class="flex items-center"><i class="fa-regular fa-circle text-slate-300 mr-2"></i> 更新硬體設定手冊</li>
-                        </ul>
                     </div>
                 </div>
             </section>
 
             <section id="hardware" class="tab-content">
                 <h2 class="text-2xl font-bold mb-6">硬體操作指南</h2>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <p class="text-slate-600">內容已根據版面設定載入...</p>
-                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">內容已載入...</div>
             </section>
             
             <section id="software-basic" class="tab-content">
                 <h2 class="text-2xl font-bold mb-6">軟體操作（初）</h2>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <p class="text-slate-600">內容已根據版面設定載入...</p>
-                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">內容已載入...</div>
             </section>
 
             <section id="software-deep" class="tab-content">
                 <h2 class="text-2xl font-bold mb-6">軟體操作（深）</h2>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <p class="text-slate-600">內容已根據版面設定載入...</p>
-                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">內容已載入...</div>
             </section>
 
             <section id="future" class="tab-content space-y-6">
@@ -133,58 +120,50 @@
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-slate-800">上傳功能進階版</h3>
-                            <p class="text-blue-500 text-sm font-medium">目標：取代原有 Google 雲端，提供更直覺且美觀的管理介面</p>
+                            <p class="text-blue-500 text-sm font-medium">目標：取代原有 Google 雲端介面</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
                         <div>
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center">
-                                <i class="fa-solid fa-circle-check text-green-500 mr-2"></i> 已完成項目 (Checked)
-                            </h4>
-                            <ul class="space-y-3">
-                                <li class="check-item flex items-start gap-3 text-sm">
-                                    <i class="fa-solid fa-check mt-1"></i>
-                                    <span>讀出 Google 雲端資料、輸入密碼登入功能</span>
-                                </li>
-                                <li class="check-item flex items-start gap-3 text-sm">
-                                    <i class="fa-solid fa-check mt-1"></i>
-                                    <span>圖片影片專用元件預覽、新增檔案與資料夾功能</span>
-                                </li>
-                                <li class="check-item flex items-start gap-3 text-sm">
-                                    <i class="fa-solid fa-check mt-1"></i>
-                                    <span>改檔名功能、刪除改為移動至指定資料夾功能</span>
-                                </li>
-                                <li class="check-item flex items-start gap-3 text-sm">
-                                    <i class="fa-solid fa-check mt-1"></i>
-                                    <span>新增開啟 Google 雲端連結、新增常用類別標籤</span>
-                                </li>
-                                <li class="check-item flex items-start gap-3 text-sm">
-                                    <i class="fa-solid fa-check mt-1"></i>
-                                    <span>類別改為設定檔模式、自定義網址優化</span>
-                                </li>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">已完成項目 (Checked)</h4>
+                            <ul class="space-y-2">
+                                <li class="check-item text-sm flex gap-3"><i class="fa-solid fa-check mt-1"></i>讀出雲端資料、密碼登入</li>
+                                <li class="check-item text-sm flex gap-3"><i class="fa-solid fa-check mt-1"></i>圖片影片預覽、資料夾功能</li>
+                                <li class="check-item text-sm flex gap-3"><i class="fa-solid fa-check mt-1"></i>改檔名、移動資料夾、雲端連結</li>
+                                <li class="check-item text-sm flex gap-3"><i class="fa-solid fa-check mt-1"></i>類別設定檔化、網址優化</li>
                             </ul>
                         </div>
-
                         <div>
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center">
-                                <i class="fa-solid fa-spinner fa-spin text-blue-500 mr-2"></i> 待開發項目 (Todo)
-                            </h4>
-                            <div class="space-y-4">
-                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
-                                    <p class="todo-item flex items-center gap-3">
-                                        <i class="fa-regular fa-square text-blue-400"></i>
-                                        切換圖片預覽模式
-                                    </p>
-                                    <p class="text-xs text-blue-400 mt-2 ml-7">優化大圖/列表檢視切換體驗</p>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">開發中項目 (Todo)</h4>
+                            <div class="space-y-3">
+                                <div class="bg-blue-50 border border-blue-100 p-3 rounded-xl">
+                                    <p class="todo-item text-sm flex gap-3"><i class="fa-regular fa-square"></i>切換圖片預覽模式</p>
                                 </div>
-                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
-                                    <p class="todo-item flex items-center gap-3">
-                                        <i class="fa-regular fa-square text-blue-400"></i>
-                                        串接 Line 發送訊息功能
-                                    </p>
-                                    <p class="text-xs text-blue-400 mt-2 ml-7">整合 Line Notify 進行檔案上傳成功通知</p>
+                                <div class="bg-blue-50 border border-blue-100 p-3 rounded-xl">
+                                    <p class="todo-item text-sm flex gap-3"><i class="fa-regular fa-square"></i>串接 Line 發送訊息</p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-8">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">擴充功能計畫</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                <i class="fa-brands fa-line text-emerald-500 text-2xl mb-4"></i>
+                                <h5 class="font-bold text-slate-800 mb-2">Line 發訊息</h5>
+                                <p class="text-xs text-slate-500 leading-relaxed">待細化：自動化通知與訊息排程功能開發。</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-violet-200 transition-colors">
+                                <i class="fa-solid fa-people-group text-violet-500 text-2xl mb-4"></i>
+                                <h5 class="font-bold text-slate-800 mb-2">聚會筆記</h5>
+                                <p class="text-xs text-slate-500 leading-relaxed">待細化：群體活動紀錄與後勤支援資料整合。</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-blue-200 transition-colors">
+                                <i class="fa-solid fa-circle-info text-blue-500 text-2xl mb-4"></i>
+                                <h5 class="font-bold text-slate-800 mb-2">功能介紹</h5>
+                                <p class="text-xs text-slate-500 leading-relaxed">待細化：針對現有系統功能的導覽與說明頁面。</p>
                             </div>
                         </div>
                     </div>
@@ -195,49 +174,32 @@
                 <h2 class="text-2xl font-bold mb-6">快速連結</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
-                        <i class="fa-brands fa-github text-2xl mb-2"></i>
+                        <i class="fa-brands fa-github text-2xl mb-2 text-slate-800"></i>
                         <div class="text-sm">GitHub Repo</div>
-                    </a>
-                    <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
-                        <i class="fa-solid fa-table text-2xl mb-2 text-green-600"></i>
-                        <div class="text-sm">Google Sheets</div>
                     </a>
                 </div>
             </section>
-
         </main>
     </div>
 
     <script>
         function showTab(tabId) {
-            // 隱藏內容與重置按鈕樣式
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-            
-            // 顯示對應內容
             document.getElementById(tabId).classList.add('active');
-            
-            // 處理多個導航按鈕的 active (桌機與手機)
             const activeLinks = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
             activeLinks.forEach(link => link.classList.add('active'));
-
-            // 手機版點擊後自動關閉選單
-            if (window.innerWidth < 768) {
-                toggleMobileMenu();
-            }
+            if (window.innerWidth < 768) toggleMobileMenu();
         }
 
         function toggleMobileMenu() {
             const sidebar = document.getElementById('mobile-sidebar');
             const overlay = document.getElementById('sidebar-overlay');
-            
             if (sidebar.classList.contains('sidebar-closed')) {
-                sidebar.classList.remove('sidebar-closed');
-                sidebar.classList.add('sidebar-open');
+                sidebar.classList.replace('sidebar-closed', 'sidebar-open');
                 overlay.classList.remove('hidden');
             } else {
-                sidebar.classList.remove('sidebar-open');
-                sidebar.classList.add('sidebar-closed');
+                sidebar.classList.replace('sidebar-open', 'sidebar-closed');
                 overlay.classList.add('hidden');
             }
         }
