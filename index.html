@@ -2,20 +2,27 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>個人工作管理系統 | Professional Workspace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
         
-        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: #f1f5f9; }
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+            background-color: #f1f5f9; 
+            padding-bottom: 70px; /* 為底部導覽留空間 */
+        }
+        @media (min-width: 768px) {
+            body { padding-bottom: 0; }
+        }
         
-        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease-out; }
         .tab-content.active { display: block; }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -26,12 +33,21 @@
             font-weight: 700;
         }
 
+        /* 底部導覽啟動樣式 */
+        .bottom-nav-link.active { color: #1d4ed8; }
+        .bottom-nav-link.active i { transform: translateY(-2px); color: #1d4ed8; }
+
         .content-card {
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
             box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05);
             border-radius: 2rem;
         }
+
+        /* 摺疊面板美化 */
+        details summary::-webkit-details-marker { display:none; }
+        details summary { outline: none; list-style: none; }
+        details[open] summary i.fa-chevron-down { transform: rotate(180deg); }
         
         #mobile-sidebar { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .sidebar-open { transform: translateX(0); }
@@ -45,7 +61,7 @@
             <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
                 <i class="fa-solid fa-terminal text-xs"></i>
             </div>
-            <h1 class="font-bold text-slate-800 text-sm">工作管理系統</h1>
+            <h1 class="font-bold text-slate-800 text-sm tracking-tight">工作管理系統</h1>
         </div>
         <button onclick="toggleMobileMenu()" class="text-slate-600 w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100">
             <i class="fa-solid fa-bars-staggered text-xl"></i>
@@ -61,7 +77,7 @@
                     </div>
                     <div>
                         <h1 class="text-lg font-bold tracking-tight text-slate-800">個人工作站</h1>
-                        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest">Workspace v2.5</p>
+                        <p class="text-[10px] text-slate-400 font-medium uppercase tracking-widest text-xs">Workspace v2.5</p>
                     </div>
                 </div>
             </div>
@@ -93,237 +109,354 @@
             </nav>
         </aside>
 
+        <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 flex justify-around py-3 px-2 z-50">
+            <button onclick="showTab('home')" class="bottom-nav-link active flex flex-col items-center gap-1 transition-all">
+                <i class="fa-solid fa-house-user text-xl"></i>
+                <span class="text-[10px] font-bold">首頁</span>
+            </button>
+            <button onclick="showTab('projects')" class="bottom-nav-link flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i class="fa-solid fa-rocket text-xl"></i>
+                <span class="text-[10px] font-bold">專案</span>
+            </button>
+            <button onclick="toggleMobileMenu()" class="bottom-nav-link flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i class="fa-solid fa-book text-xl"></i>
+                <span class="text-[10px] font-bold">手冊</span>
+            </button>
+            <button onclick="showTab('links')" class="bottom-nav-link flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i class="fa-solid fa-link text-xl"></i>
+                <span class="text-[10px] font-bold">連結</span>
+            </button>
+        </div>
+
         <div id="sidebar-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden md:hidden"></div>
 
-        <main class="flex-1 p-6 md:p-16 max-w-6xl mx-auto w-full">
+        <main class="flex-1 p-5 md:p-16 max-w-6xl mx-auto w-full">
             
             <section id="home" class="tab-content active">
-                <header>
-                    <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">總覽 Dashboard</h2>
-                    <p class="text-slate-500 mt-2 font-medium">歡迎回來，今天預計進行哪些工作？</p>
-                    <p class="text-red-600 font-bold mt-6 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-exclamation"></i>
-                        資料整理中，請至「目前專案」頁籤
+                <header class="max-w-3xl">
+                    <div class="space-y-10 mt-4 md:mt-8 mb-16">
+                        <div class="quote-border">
+                            <p class="text-lg md:text-xl text-slate-500 italic leading-relaxed">
+                                "那投入兩個小錢的婦人，在傾盡所有的那一刻，或許也曾有過一絲不安與衝動的惶恐。"
+                            </p>
+                        </div>
+                        <div class="quote-border">
+                            <p class="text-lg md:text-xl text-slate-500 italic leading-relaxed">
+                                "我若是仍舊討人的喜歡，我就不是基督的僕人了。"
+                            </p>
+                        </div>
+                        <div class="quote-border">
+                            <p class="text-xl md:text-2xl text-slate-800 font-bold tracking-wide">
+                                "我不想談專業，在神面前何談專業？"
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="text-red-600 font-bold mt-10 flex items-center gap-3 bg-red-50 p-4 rounded-2xl border border-red-100">
+                        <i class="fa-solid fa-circle-exclamation text-xl"></i>
+                        <span>資料整理中，請至「目前專案」頁籤</span>
                     </p>
+
+                    <button onclick="showTab('projects')" class="w-full md:w-auto mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 px-10 rounded-[1.5rem] shadow-xl shadow-blue-200 transition-all transform active:scale-95 flex items-center justify-center gap-3 text-lg">
+                        <i class="fa-solid fa-rocket"></i>
+                        進入目前專案系統
+                    </button>
                 </header>
             </section>
 
-            <section id="projects" class="tab-content space-y-12">
+            <section id="projects" class="tab-content space-y-8">
                 <header>
-                    <h2 class="text-4xl font-extrabold tracking-tight text-slate-900">目前專案</h2>
-                    <p class="text-slate-500 mt-2 font-medium">進行中任務與核心功能開發進度</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">目前專案</h2>
+                    <p class="text-slate-500 mt-2 font-medium">進行中任務與開發進度清單</p>
                 </header>
 
-                <div class="content-card p-8 md:p-10">
+                <div class="content-card p-6 md:p-10">
                     <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-100">
+                        <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-100 shrink-0">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                         </div>
                         <div class="flex-1 w-full">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                 <h3 class="text-2xl font-bold text-slate-900">上傳功能進階版</h3>
-                                <div class="flex gap-4 items-center bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">14</span></div>
+                                <div class="flex flex-wrap gap-2 md:gap-4 items-center bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">14</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">11</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">11</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">3</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">3</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">78%</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">78%</span></div>
                                 </div>
                             </div>
-                            <p class="text-blue-500 font-bold text-xs tracking-wider mb-8 uppercase">提供美觀直覺的雲端管理介面</p>
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 已實現功能</h4>
-                                    <ul class="space-y-2 text-[11px] text-slate-400 line-through">
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>同步 Google 雲端檔案讀取</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>安全性密碼登入驗證</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>多媒體檔案即時預覽</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>新增檔案與目錄結構化功能</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>檔案名稱修改管理</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>檔案移除與清理功能</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>資源回收站機制 (移動替代刪除)</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>快速跳轉雲端原始連結</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>預設常用分類標籤系統</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>分類改採設定檔模式</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>網址結構優化與自定義</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> 待處理項目</h4>
-                                    <div class="space-y-3">
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3.5 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">全面整合並取代現行功能</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3.5 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">多種圖片預覽模式切換</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3.5 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">Line 訊息自動化串接</span></div>
+                            
+                            <div class="space-y-4">
+                                <details open class="group">
+                                    <summary class="flex justify-between items-center bg-blue-50/50 p-4 rounded-xl cursor-pointer font-bold text-blue-700 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-list-check"></i> 待處理項目</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4 space-y-3">
+                                        <div class="border border-blue-100 p-3.5 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">全面整合並取代現行功能</span></div>
+                                        <div class="border border-blue-100 p-3.5 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">多種圖片預覽模式切換</span></div>
+                                        <div class="border border-blue-100 p-3.5 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">Line 訊息自動化串接</span></div>
                                     </div>
-                                </div>
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span> 暫不處理</h4>
-                                    <div class="space-y-3">
+                                </details>
+
+                                <details class="group">
+                                    <summary class="flex justify-between items-center bg-slate-50 p-4 rounded-xl cursor-pointer font-bold text-slate-600 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> 已實現功能</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4">
+                                        <ul class="space-y-3 text-xs text-slate-400 line-through">
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>同步 Google 雲端檔案讀取</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>安全性密碼登入驗證</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>多媒體檔案即時預覽</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>新增檔案與目錄結構化功能</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>檔案名稱修改管理</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>檔案移除與清理功能</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>資源回收站機制 (移動替代刪除)</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>快速跳轉雲端原始連結</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>預設常用分類標籤系統</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>分類功能改採設定檔模式</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>網址結構優化與自定義</li>
+                                        </ul>
+                                    </div>
+                                </details>
+
+                                <details class="group">
+                                    <summary class="flex justify-between items-center bg-slate-50 p-4 rounded-xl cursor-pointer font-bold text-slate-400 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-hourglass-half"></i> 暫不處理</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4 space-y-3">
                                         <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100"><span class="text-xs font-bold text-slate-500 block mb-1">代禱事項</span><span class="text-[10px] text-slate-400 italic font-medium">原因：統計後還是要有人整理</span></div>
                                         <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100"><span class="text-xs font-bold text-slate-500 block mb-1">更美麗的圖片風格</span><span class="text-[10px] text-slate-400 italic font-medium">原因：只是個工具</span></div>
                                         <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-100"><span class="text-xs font-bold text-slate-500 block mb-1">加入第二個虛擬人物</span><span class="text-[10px] text-slate-400 italic font-medium">原因：偏複雜，以後再說</span></div>
                                     </div>
-                                </div>
+                                </details>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="content-card p-8 md:p-10">
+                <div class="content-card p-6 md:p-10">
                     <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-emerald-100">
+                        <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-emerald-100 shrink-0">
                             <i class="fa-brands fa-line"></i>
                         </div>
                         <div class="flex-1 w-full">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                 <h3 class="text-2xl font-bold text-slate-900">Line 發訊息 專案</h3>
-                                <div class="flex gap-4 items-center bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">12</span></div>
+                                <div class="flex flex-wrap gap-2 md:gap-4 items-center bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">12</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">5</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">5</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">7</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">7</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">42%</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">42%</span></div>
                                 </div>
                             </div>
-                            <p class="text-emerald-600 font-bold text-xs tracking-wider mb-8 uppercase">自動化訊息排程系統</p>
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 已實現功能</h4>
-                                    <ul class="space-y-2 text-[11px] text-slate-400 line-through">
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>申請新的官方 Line 帳號</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>取得用戶 ID 的程式開發</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>建立預約發送清單 (GS)</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>發送文字、圖片、Flex</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>Google Sheet 串接優化</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> 待處理項目</h4>
-                                    <div class="space-y-2">
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-red-600">優化手機版公告事項網站排版</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">官方 Line 名稱變更</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">安排表資料自動匯入機制</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">串接新版上傳功能</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">正式套用官方帳號運作</span></div>
-                                        <div class="bg-blue-50/50 border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">小幫手系統正式上線</span></div>
+                            
+                            <div class="space-y-4">
+                                <details open class="group">
+                                    <summary class="flex justify-between items-center bg-blue-50/50 p-4 rounded-xl cursor-pointer font-bold text-blue-700 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-list-check"></i> 待處理項目</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4 space-y-2">
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">優化手機版公告事項網站排版</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">官方 Line 名稱變更</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">安排表資料自動匯入機制</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">串接新版上傳功能</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">正式套用官方帳號運作</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400"></i><span class="text-xs font-bold text-slate-700">小幫手系統正式上線</span></div>
                                     </div>
-                                </div>
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span> 暫不處理</h4>
-                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-[11px] text-slate-400">
-                                        <b>新增更多 Flex 模板樣式</b><br>原因：稍微有點複雜，之後再說
+                                </details>
+
+                                <details class="group">
+                                    <summary class="flex justify-between items-center bg-slate-50 p-4 rounded-xl cursor-pointer font-bold text-slate-600 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> 已實現功能</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4">
+                                        <ul class="space-y-3 text-xs text-slate-400 line-through">
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>申請新的官方 Line 帳號</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>取得用戶 ID 的程式開發</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>建立預約發送清單 (GS)</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>發送文字、圖片、Flex</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>Google Sheet 串接優化</li>
+                                        </ul>
                                     </div>
-                                </div>
+                                </details>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="content-card p-8 md:p-10">
+                <div class="content-card p-6 md:p-10">
                     <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-14 h-14 bg-violet-600 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-violet-100">
+                        <div class="w-14 h-14 bg-violet-600 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-violet-100 shrink-0">
                             <i class="fa-solid fa-book-bible"></i>
                         </div>
                         <div class="flex-1 w-full">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                 <h3 class="text-2xl font-bold text-slate-900">聚會筆記整理</h3>
-                                <div class="flex gap-4 items-center bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">13</span></div>
+                                <div class="flex flex-wrap gap-2 md:gap-4 items-center bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">13</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">3</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">3</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">10</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">10</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">23%</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">23%</span></div>
                                 </div>
                             </div>
-                            <p class="text-violet-600 font-bold text-xs tracking-wider mb-8 uppercase">目標：以 NotebookLm 為核心崇拜聚會專案</p>
-                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 已實現功能</h4>
-                                    <ul class="space-y-2 text-[11px] text-slate-400 line-through">
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>建立筆記彙整平台</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>分析第一場聚會內容</li>
-                                        <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>自動產生測驗題功能</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span> 待處理項目</h4>
-                                    <div class="grid grid-cols-1 gap-2">
-                                        <div class="bg-blue-50/50 border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[11px] font-bold text-slate-700 mb-2">
-                                            <i class="fa-regular fa-square text-blue-400"></i> 聚會經文改存 Google Sheet
+                            
+                            <div class="space-y-4">
+                                <details open class="group">
+                                    <summary class="flex justify-between items-center bg-blue-50/50 p-4 rounded-xl cursor-pointer font-bold text-blue-700 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-list-check"></i> 待處理項目</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4 space-y-3">
+                                        <div class="border border-blue-100 p-2.5 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-700 mb-2">
+											<i class="fa-regular fa-square text-blue-400"></i> 聚會經文改存 Google Sheet
                                         </div>
-                                        <div class="grid grid-cols-2 gap-2">
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第二場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第三場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第四場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第五場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第六場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第七場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第八場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第九場聚會內容</div>
-                                            <div class="bg-white border border-blue-100 p-2 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第十場聚會內容</div>
+										<div class="border border-blue-100 p-2.5 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-700 mb-2">
+                                            <i class="fa-regular fa-square text-blue-400"></i> 整合最終平台(Notion)
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第二場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第三場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第四場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第五場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第六場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第七場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第八場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第九場聚會內容</div>
+                                            <div class="bg-white border border-blue-50 p-3 rounded-xl flex items-center gap-2 text-[10px] text-slate-600"><i class="fa-regular fa-square text-blue-300"></i> 分析第十場聚會內容</div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-4 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span> 暫不處理</h4>
-                                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-[11px] text-slate-400">
-                                        <b>自動產生聚會筆記</b><br>原因：NotebookLm 沒有 API、太耗時
+                                </details>
+
+                                <details class="group">
+                                    <summary class="flex justify-between items-center bg-slate-50 p-4 rounded-xl cursor-pointer font-bold text-slate-600 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> 已實現功能</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4">
+                                        <ul class="space-y-3 text-xs text-slate-400 line-through">
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>建立筆記彙整平台</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>分析第一場聚會內容</li>
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>自動產生測驗題功能</li>
+                                        </ul>
                                     </div>
-                                </div>
+                                </details>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="content-card p-8 md:p-10">
+                <div class="content-card p-6 md:p-10">
                     <div class="flex flex-col md:flex-row gap-6 items-start">
-                        <div class="w-14 h-14 bg-blue-400 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-50">
+                        <div class="w-14 h-14 bg-blue-400 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-blue-50 shrink-0">
                             <i class="fa-solid fa-map-location-dot"></i>
                         </div>
                         <div class="flex-1 w-full">
-                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+                            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                                 <h3 class="text-2xl font-bold text-slate-900">系統引導與介紹頁</h3>
-                                <div class="flex gap-4 items-center bg-slate-50 px-4 py-2 rounded-2xl border border-slate-100">
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">1</span></div>
+                                <div class="flex flex-wrap gap-2 md:gap-4 items-center bg-slate-50 p-3 rounded-2xl border border-slate-100">
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-slate-400 uppercase">總項</span><span class="text-sm font-bold">8</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">1</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-emerald-500 uppercase">OK</span><span class="text-sm font-bold">1</span></div>
                                     <div class="w-px h-4 bg-slate-200"></div>
-                                    <div class="flex flex-col items-center"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">0%</span></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-blue-500 uppercase">待辦</span><span class="text-sm font-bold">7</span></div>
+                                    <div class="w-px h-4 bg-slate-200"></div>
+                                    <div class="flex flex-col items-center px-2"><span class="text-[9px] font-bold text-indigo-600 uppercase">進度</span><span class="text-sm font-bold text-indigo-600">13%</span></div>
                                 </div>
                             </div>
-                            <p class="text-blue-400 font-bold text-xs tracking-wider mb-6 uppercase">系統功能與操作導引</p>
-                            <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-xl flex items-center gap-3 w-fit">
-                                <i class="fa-regular fa-square text-blue-400"></i>
-                                <span class="text-sm font-bold text-slate-700">建立互動式系統功能導覽</span>
+                            
+                            <div class="space-y-4">
+                                <details open class="group">
+                                    <summary class="flex justify-between items-center bg-blue-50/50 p-4 rounded-xl cursor-pointer font-bold text-blue-700 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-list-check"></i> 待處理項目</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4 space-y-2">
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">新版上傳系統操作導覽</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">Line 自動化發送功能說明</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">聚會筆記管理與分析指引</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">後台管理端：上傳功能配置說明</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">後台管理端：Line 串接設定導覽</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">後台管理端：聚會筆記分析邏輯簡介</span></div>
+                                        <div class="border border-blue-100 p-3 rounded-xl flex items-center gap-3"><i class="fa-regular fa-square text-blue-400 text-sm"></i><span class="text-xs font-bold text-slate-700">基礎硬體設備與環境介紹</span></div>
+                                    </div>
+                                </details>
+
+                                <details class="group">
+                                    <summary class="flex justify-between items-center bg-slate-50 p-4 rounded-xl cursor-pointer font-bold text-slate-600 text-sm">
+                                        <div class="flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> 已實現功能</div>
+                                        <i class="fa-solid fa-chevron-down transition-transform"></i>
+                                    </summary>
+                                    <div class="p-4">
+                                        <ul class="space-y-3 text-xs text-slate-400 line-through">
+                                            <li><i class="fa-solid fa-check text-emerald-500 mr-2 text-[10px]"></i>系統平台架構整體簡介</li>
+                                        </ul>
+                                    </div>
+                                </details>
                             </div>
                         </div>
                     </div>
                 </div>
 
+            </section>
+
+            <section id="hardware" class="tab-content"><h2 class="text-3xl font-bold mb-8">硬體設備手冊</h2><div class="content-card p-10 italic text-slate-400">內容準備中...</div></section>
+            <section id="software-basic" class="tab-content"><h2 class="text-3xl font-bold mb-8">軟體操作指南</h2><div class="content-card p-10 italic text-slate-400">內容準備中...</div></section>
+            <section id="software-deep" class="tab-content"><h2 class="text-3xl font-bold mb-8">軟體維護紀錄</h2><div class="content-card p-10 italic text-slate-400">內容準備中...</div></section>
+            <section id="links" class="tab-content">
+                <h2 class="text-3xl font-bold mb-8">外部資源連結</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <a href="https://github.com" target="_blank" class="content-card p-8 flex flex-col items-center gap-4 hover:shadow-xl hover:-translate-y-1 transition-all text-center">
+                        <i class="fa-brands fa-github text-4xl"></i>
+                        <span class="font-bold text-sm">GitHub</span>
+                    </a>
+                </div>
             </section>
         </main>
     </div>
 
     <script>
         function showTab(tabId) {
+            // 隱藏所有分頁
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            // 顯示目標分頁
             const target = document.getElementById(tabId);
             if(target) target.classList.add('active');
             
+            // 更新側邊欄按鈕狀態
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            // 修正選擇器以精確匹配對應按鈕
-            const activeLinks = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
-            activeLinks.forEach(link => link.classList.add('active'));
+            const activeSidebarLinks = document.querySelectorAll(`aside button[onclick="showTab('${tabId}')"]`);
+            activeSidebarLinks.forEach(link => link.classList.add('active'));
 
+            // 更新底部導覽按鈕狀態 (手機版)
+            document.querySelectorAll('.bottom-nav-link').forEach(l => {
+                l.classList.remove('active');
+                l.classList.add('text-slate-400');
+            });
+            const activeBottomLinks = document.querySelectorAll(`.bottom-nav-link[onclick="showTab('${tabId}')"]`);
+            activeBottomLinks.forEach(link => {
+                link.classList.add('active');
+                link.classList.remove('text-slate-400');
+            });
+
+            // 如果在手機版點擊後關閉側邊欄
             if (window.innerWidth < 768) {
                 const sidebar = document.getElementById('mobile-sidebar');
                 if (sidebar.classList.contains('sidebar-open')) toggleMobileMenu();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
 
