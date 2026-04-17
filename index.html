@@ -12,18 +12,22 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .nav-link.active { background-color: #eff6ff; color: #1d4ed8; border-right: 4px solid #1d4ed8; }
-        
-        /* 手機版選單動畫 */
+
+        /* Mobile sidebar animation */
         #mobile-sidebar { transition: transform 0.3s ease-in-out; }
         .sidebar-open { transform: translateX(0); }
         .sidebar-closed { transform: translateX(-100%); }
+
+        /* Future plan list styling */
+        .check-item { color: #64748b; text-decoration: line-through; opacity: 0.7; }
+        .todo-item { color: #1e293b; font-weight: 600; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
     <div class="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center sticky top-0 z-50">
         <h1 class="text-lg font-bold text-blue-600">工作管理系統</h1>
-        <button onclick="toggleMobileMenu()" class="text-slate-600 p-2">
+        <button onclick="toggleMobileMenu()" class="text-slate-600 p-2 focus:outline-none">
             <i class="fa-solid fa-bars text-xl"></i>
         </button>
     </div>
@@ -40,16 +44,24 @@
                 </button>
             </div>
             
-            <nav class="flex-1 px-4 space-y-1">
+            <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
                 <button onclick="showTab('home')" class="nav-link active w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all">
                     <i class="fa-solid fa-house mr-3 w-5"></i> 首頁
                 </button>
                 <button onclick="showTab('hardware')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
                     <i class="fa-solid fa-microchip mr-3 w-5"></i> 硬體操作
                 </button>
-                <button onclick="showTab('software')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
-                    <i class="fa-solid fa-code mr-3 w-5"></i> 軟體操作
-                </button>
+
+                <div class="pt-1 pb-1">
+                    <p class="px-4 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">軟體操作</p>
+                    <button onclick="showTab('software-basic')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-seedling mr-3 w-5 text-emerald-500"></i> 軟體操作（初）
+                    </button>
+                    <button onclick="showTab('software-deep')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                        <i class="fa-solid fa-layer-group mr-3 w-5 text-violet-500"></i> 軟體操作（深）
+                    </button>
+                </div>
+
                 <button onclick="showTab('future')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
                     <i class="fa-solid fa-rocket mr-3 w-5"></i> 未來計畫
                 </button>
@@ -69,78 +81,111 @@
             
             <section id="home" class="tab-content active space-y-8">
                 <header>
-                    <h2 class="text-2xl md:text-3xl font-bold">工作概覽</h2>
+                    <h2 class="text-3xl font-bold">歡迎回來，這是你的工作概覽</h2>
                     <p class="text-slate-500 mt-2">今天是 2026年4月17日</p>
                 </header>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-blue-600 text-white p-6 md:p-8 rounded-3xl shadow-lg shadow-blue-200">
-                        <h3 class="text-lg opacity-80 font-medium">開發中項目</h3>
-                        <p class="text-xl md:text-2xl font-bold mt-2">上傳功能進階版 (Vite)</p>
+                    <div class="bg-blue-600 text-white p-8 rounded-3xl shadow-lg shadow-blue-200">
+                        <h3 class="text-lg opacity-80">當前重點任務</h3>
+                        <p class="text-2xl font-bold mt-2">Case Management 優化</p>
                         <div class="mt-6 bg-blue-500 rounded-full h-2 w-full">
-                            <div class="bg-white h-2 rounded-full w-[85%]"></div>
+                            <div class="bg-white h-2 rounded-full w-[81%]"></div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <section id="hardware" class="tab-content space-y-6">
-                <h2 class="text-2xl font-bold">硬體操作指南</h2>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <p class="text-slate-600">硬體設定手冊內容...</p>
-                </div>
-            </section>
-
-            <section id="software" class="tab-content space-y-6">
-                <h2 class="text-2xl font-bold">軟體開發與操作</h2>
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <p class="text-slate-500 mb-2 font-mono text-sm">// 專案啟動</p>
-                    <div class="bg-slate-800 text-emerald-400 p-4 rounded-xl font-mono text-sm overflow-x-auto">
-                        pnpm turbo run dev --filter=case-management
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <h3 class="text-slate-500 font-bold text-sm uppercase">今日 Todo</h3>
+                        <ul class="mt-4 space-y-3">
+                            <li class="flex items-center"><i class="fa-regular fa-circle-check text-green-500 mr-2"></i> 檢查網頁模板佈局</li>
+                            <li class="flex items-center"><i class="fa-regular fa-circle text-slate-300 mr-2"></i> 更新硬體設定手冊</li>
+                        </ul>
                     </div>
+                </div>
+            </section>
+
+            <section id="hardware" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">硬體操作指南</h2>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <p class="text-slate-600">內容已根據版面設定載入...</p>
+                </div>
+            </section>
+            
+            <section id="software-basic" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">軟體操作（初）</h2>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <p class="text-slate-600">內容已根據版面設定載入...</p>
+                </div>
+            </section>
+
+            <section id="software-deep" class="tab-content">
+                <h2 class="text-2xl font-bold mb-6">軟體操作（深）</h2>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <p class="text-slate-600">內容已根據版面設定載入...</p>
                 </div>
             </section>
 
             <section id="future" class="tab-content space-y-6">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-2xl font-bold">未來計畫 / 開發藍圖</h2>
-                    <span class="bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded">功能開發項目</span>
-                </div>
+                <h2 class="text-2xl font-bold text-orange-600">未來計畫 / Roadmap</h2>
 
                 <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-blue-100 p-3 rounded-xl mr-4">
-                            <i class="fa-solid fa-cloud-arrow-up text-blue-600 text-xl"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="bg-blue-100 text-blue-600 rounded-2xl p-4">
+                            <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold">上傳功能進階版</h3>
-                            <p class="text-slate-500 text-sm italic">目標：取代原有 Google 雲端介面，提供美觀之管理功能</p>
+                            <h3 class="text-xl font-bold text-slate-800">上傳功能進階版</h3>
+                            <p class="text-blue-500 text-sm font-medium">目標：取代原有 Google 雲端，提供更直覺且美觀的管理介面</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
-                        <div class="space-y-3">
-                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider">已完成 (Check)</h4>
-                            <ul class="space-y-2">
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 讀出 Google 雲端資料</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 輸入密碼登入</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 圖片影片用元件預覽</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 新增檔案與資料夾功能</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 改檔名、刪除檔案功能</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 刪除改成移動至其他資料夾</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 開啟雲端連結、類別設定檔化</li>
-                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 更改網址設定</li>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center">
+                                <i class="fa-solid fa-circle-check text-green-500 mr-2"></i> 已完成項目 (Checked)
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="check-item flex items-start gap-3 text-sm">
+                                    <i class="fa-solid fa-check mt-1"></i>
+                                    <span>讀出 Google 雲端資料、輸入密碼登入功能</span>
+                                </li>
+                                <li class="check-item flex items-start gap-3 text-sm">
+                                    <i class="fa-solid fa-check mt-1"></i>
+                                    <span>圖片影片專用元件預覽、新增檔案與資料夾功能</span>
+                                </li>
+                                <li class="check-item flex items-start gap-3 text-sm">
+                                    <i class="fa-solid fa-check mt-1"></i>
+                                    <span>改檔名功能、刪除改為移動至指定資料夾功能</span>
+                                </li>
+                                <li class="check-item flex items-start gap-3 text-sm">
+                                    <i class="fa-solid fa-check mt-1"></i>
+                                    <span>新增開啟 Google 雲端連結、新增常用類別標籤</span>
+                                </li>
+                                <li class="check-item flex items-start gap-3 text-sm">
+                                    <i class="fa-solid fa-check mt-1"></i>
+                                    <span>類別改為設定檔模式、自定義網址優化</span>
+                                </li>
                             </ul>
                         </div>
-                        <div class="space-y-3">
-                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider">開發中 (False)</h4>
-                            <ul class="space-y-2">
-                                <li class="flex items-center text-slate-800 font-medium bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                    <i class="fa-regular fa-circle text-slate-300 mr-3"></i> 切換圖片預覽模式
-                                </li>
-                                <li class="flex items-center text-slate-800 font-medium bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                    <i class="fa-regular fa-circle text-slate-300 mr-3"></i> 串接 Line 發送訊息
-                                </li>
-                            </ul>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center">
+                                <i class="fa-solid fa-spinner fa-spin text-blue-500 mr-2"></i> 待開發項目 (Todo)
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                                    <p class="todo-item flex items-center gap-3">
+                                        <i class="fa-regular fa-square text-blue-400"></i>
+                                        切換圖片預覽模式
+                                    </p>
+                                    <p class="text-xs text-blue-400 mt-2 ml-7">優化大圖/列表檢視切換體驗</p>
+                                </div>
+                                <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                                    <p class="todo-item flex items-center gap-3">
+                                        <i class="fa-regular fa-square text-blue-400"></i>
+                                        串接 Line 發送訊息功能
+                                    </p>
+                                    <p class="text-xs text-blue-400 mt-2 ml-7">整合 Line Notify 進行檔案上傳成功通知</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,7 +195,7 @@
                 <h2 class="text-2xl font-bold mb-6">快速連結</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
-                        <i class="fa-brands fa-github text-2xl mb-2 text-slate-800"></i>
+                        <i class="fa-brands fa-github text-2xl mb-2"></i>
                         <div class="text-sm">GitHub Repo</div>
                     </a>
                     <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
@@ -164,24 +209,24 @@
     </div>
 
     <script>
-        // 切換頁籤
         function showTab(tabId) {
+            // 隱藏內容與重置按鈕樣式
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             
+            // 顯示對應內容
             document.getElementById(tabId).classList.add('active');
             
-            // 處理桌面版 active 樣式
-            const activeNavs = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
-            activeNavs.forEach(nav => nav.classList.add('active'));
+            // 處理多個導航按鈕的 active (桌機與手機)
+            const activeLinks = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
+            activeLinks.forEach(link => link.classList.add('active'));
 
-            // 如果在手機版，切換後自動關閉選單
+            // 手機版點擊後自動關閉選單
             if (window.innerWidth < 768) {
                 toggleMobileMenu();
             }
         }
 
-        // 手機版選單開關
         function toggleMobileMenu() {
             const sidebar = document.getElementById('mobile-sidebar');
             const overlay = document.getElementById('sidebar-overlay');
