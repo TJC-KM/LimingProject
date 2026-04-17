@@ -12,51 +12,44 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .nav-link.active { background-color: #eff6ff; color: #1d4ed8; border-right: 4px solid #1d4ed8; }
-
-        /* Future plan cards */
-        .future-card {
-            background: white;
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            transition: box-shadow 0.2s, transform 0.2s;
-            cursor: default;
-        }
-        .future-card:hover {
-            box-shadow: 0 6px 24px rgba(0,0,0,0.10);
-            transform: translateY(-2px);
-        }
+        
+        /* 手機版選單動畫 */
+        #mobile-sidebar { transition: transform 0.3s ease-in-out; }
+        .sidebar-open { transform: translateX(0); }
+        .sidebar-closed { transform: translateX(-100%); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
+    <div class="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center sticky top-0 z-50">
+        <h1 class="text-lg font-bold text-blue-600">工作管理系統</h1>
+        <button onclick="toggleMobileMenu()" class="text-slate-600 p-2">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+    </div>
+
     <div class="flex min-h-screen">
-        <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col sticky top-0 h-screen">
-            <div class="p-6">
-                <h1 class="text-xl font-bold text-blue-600 tracking-tight">工作管理系統</h1>
-                <p class="text-xs text-slate-400 mt-1">Personal Workspace v2.0</p>
+        <aside id="mobile-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col h-screen md:sticky md:top-0 md:translate-x-0 sidebar-closed">
+            <div class="p-6 flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl font-bold text-blue-600 tracking-tight">工作管理系統</h1>
+                    <p class="text-xs text-slate-400 mt-1">Personal Workspace v2.0</p>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-slate-400">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
             </div>
             
-            <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+            <nav class="flex-1 px-4 space-y-1">
                 <button onclick="showTab('home')" class="nav-link active w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all">
                     <i class="fa-solid fa-house mr-3 w-5"></i> 首頁
                 </button>
                 <button onclick="showTab('hardware')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
                     <i class="fa-solid fa-microchip mr-3 w-5"></i> 硬體操作
                 </button>
-
-                <!-- 軟體操作 group -->
-                <div class="pt-1 pb-1">
-                    <p class="px-4 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">軟體操作</p>
-                    <button onclick="showTab('software-basic')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
-                        <i class="fa-solid fa-seedling mr-3 w-5 text-emerald-500"></i> 軟體操作（初）
-                    </button>
-                    <button onclick="showTab('software-deep')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
-                        <i class="fa-solid fa-layer-group mr-3 w-5 text-violet-500"></i> 軟體操作（深）
-                    </button>
-                </div>
-
+                <button onclick="showTab('software')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
+                    <i class="fa-solid fa-code mr-3 w-5"></i> 軟體操作
+                </button>
                 <button onclick="showTab('future')" class="nav-link w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-slate-600 hover:bg-slate-50 transition-all">
                     <i class="fa-solid fa-rocket mr-3 w-5"></i> 未來計畫
                 </button>
@@ -70,240 +63,94 @@
             </div>
         </aside>
 
-        <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+        <div id="sidebar-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-900/50 z-40 hidden md:hidden"></div>
+
+        <main class="flex-1 p-6 md:p-12 overflow-y-auto">
             
-            <!-- 首頁 -->
             <section id="home" class="tab-content active space-y-8">
                 <header>
-                    <h2 class="text-3xl font-bold">歡迎回來，這是你的工作概覽</h2>
-                    <p class="text-slate-500 mt-2">今天是 2026年4月16日</p>
+                    <h2 class="text-2xl md:text-3xl font-bold">工作概覽</h2>
+                    <p class="text-slate-500 mt-2">今天是 2026年4月17日</p>
                 </header>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-blue-600 text-white p-8 rounded-3xl shadow-lg shadow-blue-200">
-                        <h3 class="text-lg opacity-80">當前重點任務</h3>
-                        <p class="text-2xl font-bold mt-2">Case Management 優化</p>
+                    <div class="bg-blue-600 text-white p-6 md:p-8 rounded-3xl shadow-lg shadow-blue-200">
+                        <h3 class="text-lg opacity-80 font-medium">開發中項目</h3>
+                        <p class="text-xl md:text-2xl font-bold mt-2">上傳功能進階版 (Vite)</p>
                         <div class="mt-6 bg-blue-500 rounded-full h-2 w-full">
-                            <div class="bg-white h-2 rounded-full w-3/4"></div>
+                            <div class="bg-white h-2 rounded-full w-[85%]"></div>
                         </div>
-                    </div>
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                        <h3 class="text-slate-500 font-bold text-sm uppercase">今日 Todo</h3>
-                        <ul class="mt-4 space-y-3">
-                            <li class="flex items-center"><i class="fa-regular fa-circle-check text-green-500 mr-2"></i> 檢查網頁模板佈局</li>
-                            <li class="flex items-center"><i class="fa-regular fa-circle text-slate-300 mr-2"></i> 更新硬體設定手冊</li>
-                        </ul>
                     </div>
                 </div>
             </section>
 
-            <!-- 硬體操作 -->
             <section id="hardware" class="tab-content space-y-6">
                 <h2 class="text-2xl font-bold">硬體操作指南</h2>
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-lg mb-4 text-blue-600 underline">監視器系統設定</h3>
-                    <p class="text-slate-600 mb-4">關於 Deco X20 與 40 台攝影機的連線設定步驟：</p>
-                    <ol class="list-decimal list-inside space-y-2 text-slate-700">
-                        <li>確認 IP 分配範圍（建議保留靜態 IP）</li>
-                        <li>檢查各樓層 Mesh 節點訊號強度</li>
-                        <li>進入後台查看攝影機即時流狀態</li>
-                    </ol>
+                    <p class="text-slate-600">硬體設定手冊內容...</p>
                 </div>
             </section>
 
-            <!-- 軟體操作（初） -->
-            <section id="software-basic" class="tab-content space-y-6">
-                <div class="flex items-center gap-3">
-                    <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">入門</span>
-                    <h2 class="text-2xl font-bold">軟體操作（初）</h2>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 font-mono">
-                    <p class="text-slate-500 mb-2 font-sans text-sm">// 啟動專案指令</p>
-                    <div class="bg-slate-800 text-emerald-400 p-4 rounded-xl text-sm">
+            <section id="software" class="tab-content space-y-6">
+                <h2 class="text-2xl font-bold">軟體開發與操作</h2>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <p class="text-slate-500 mb-2 font-mono text-sm">// 專案啟動</p>
+                    <div class="bg-slate-800 text-emerald-400 p-4 rounded-xl font-mono text-sm overflow-x-auto">
                         pnpm turbo run dev --filter=case-management
                     </div>
                 </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="font-bold mb-3 text-emerald-600 flex items-center gap-2">
-                        <i class="fa-solid fa-table-columns"></i> Google Sheets API 串接提醒
-                    </h3>
-                    <p class="text-slate-600 text-sm">部署 GAS 時務必設定為「所有人（含匿名）」權限方能讓 HTML 抓取資料。</p>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="font-bold mb-3 text-emerald-600 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check"></i> 基本操作流程
-                    </h3>
-                    <ol class="list-decimal list-inside space-y-2 text-slate-700 text-sm">
-                        <li>Clone 專案至本機</li>
-                        <li>執行 <code class="bg-slate-100 px-1 rounded">pnpm install</code> 安裝相依套件</li>
-                        <li>複製 <code class="bg-slate-100 px-1 rounded">.env.example</code> 為 <code class="bg-slate-100 px-1 rounded">.env.local</code> 並填入金鑰</li>
-                        <li>執行啟動指令後開啟 <code class="bg-slate-100 px-1 rounded">localhost:3000</code></li>
-                    </ol>
-                </div>
             </section>
 
-            <!-- 軟體操作（深） -->
-            <section id="software-deep" class="tab-content space-y-6">
-                <div class="flex items-center gap-3">
-                    <span class="bg-violet-100 text-violet-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">進階</span>
-                    <h2 class="text-2xl font-bold">軟體操作（深）</h2>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="font-bold mb-3 text-violet-600 flex items-center gap-2">
-                        <i class="fa-solid fa-sitemap"></i> 架構總覽
-                    </h3>
-                    <p class="text-slate-600 text-sm mb-4">此專案採用 Turborepo Monorepo 架構，包含前台、後台與共用套件。</p>
-                    <div class="bg-slate-50 rounded-xl p-4 font-mono text-xs text-slate-700 space-y-1">
-                        <div>📦 apps/</div>
-                        <div class="ml-4">├── case-management/   <span class="text-slate-400"># 主前台</span></div>
-                        <div class="ml-4">└── admin/             <span class="text-slate-400"># 後台管理</span></div>
-                        <div>📦 packages/</div>
-                        <div class="ml-4">├── ui/                <span class="text-slate-400"># 共用元件</span></div>
-                        <div class="ml-4">└── config/            <span class="text-slate-400"># ESLint / TS 設定</span></div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="font-bold mb-3 text-violet-600 flex items-center gap-2">
-                        <i class="fa-solid fa-database"></i> 資料庫與 API 整合
-                    </h3>
-                    <ul class="space-y-2 text-slate-700 text-sm">
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-dot text-violet-400 mt-1"></i> 使用 Supabase 作為主要資料庫，RLS 規則需逐表設定</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-dot text-violet-400 mt-1"></i> Google Apps Script 作為 Webhook 橋接層，接收表單並寫入 Sheets</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-circle-dot text-violet-400 mt-1"></i> 前台透過 fetch + CORS headers 存取 GAS doGet endpoint</li>
-                    </ul>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 font-mono">
-                    <p class="text-slate-500 mb-2 font-sans text-sm font-bold">部署指令（Production）</p>
-                    <div class="bg-slate-800 text-violet-300 p-4 rounded-xl text-sm space-y-1">
-                        <div>pnpm turbo run build</div>
-                        <div>vercel deploy --prod --scope=team-xxx</div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="font-bold mb-3 text-violet-600 flex items-center gap-2">
-                        <i class="fa-solid fa-shield-halved"></i> 安全性注意事項
-                    </h3>
-                    <ul class="space-y-2 text-slate-700 text-sm">
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-400 mt-1"></i> 金鑰絕不 commit 至 Git，使用 Vercel 環境變數管理</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-400 mt-1"></i> GAS 公開端點需加入 token 驗證避免濫用</li>
-                        <li class="flex items-start gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-400 mt-1"></i> Supabase anon key 限制只讀權限，寫入需使用 service role</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- 未來計畫 -->
             <section id="future" class="tab-content space-y-6">
-                <h2 class="text-2xl font-bold text-orange-600">未來計畫 / Roadmap</h2>
-
-                <!-- Timeline (existing) -->
-                <div class="relative border-l-2 border-slate-200 ml-4 pl-6 space-y-8 mb-2">
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-1 bg-orange-500 h-4 w-4 rounded-full border-4 border-white"></div>
-                        <h4 class="font-bold">2026年5月：日本大阪旅遊</h4>
-                        <p class="text-sm text-slate-500">6天5夜，重點在於放鬆與考察在地數位應用。</p>
-                    </div>
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-1 bg-slate-300 h-4 w-4 rounded-full border-4 border-white"></div>
-                        <h4 class="font-bold">2026下半年：自動化工作流系統完整版</h4>
-                        <p class="text-sm text-slate-500">將 Google 表單、試算表與此 HTML 儀表板完全連動。</p>
-                    </div>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold">未來計畫 / 開發藍圖</h2>
+                    <span class="bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded">功能開發項目</span>
                 </div>
 
-                <!-- 4 Feature Cards -->
-                <h3 class="text-lg font-bold text-slate-700 pt-2">功能開發項目</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-
-                    <!-- 1. 上傳功能進階版 -->
-                    <div class="future-card">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="bg-blue-100 text-blue-600 rounded-xl p-3">
-                                <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-base">上傳功能進階版</h4>
-                                <span class="text-xs text-blue-500 font-medium">Upload Advanced</span>
-                            </div>
+                <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100">
+                    <div class="flex items-center mb-6">
+                        <div class="bg-blue-100 p-3 rounded-xl mr-4">
+                            <i class="fa-solid fa-cloud-arrow-up text-blue-600 text-xl"></i>
                         </div>
-                        <p class="text-sm text-slate-600">支援多檔案批次上傳、進度條顯示、檔案類型驗證，並整合 Google Drive 或 Supabase Storage 作為雲端儲存後端。</p>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="bg-blue-50 text-blue-600 text-xs px-2 py-1 rounded-lg">多檔上傳</span>
-                            <span class="bg-blue-50 text-blue-600 text-xs px-2 py-1 rounded-lg">進度條</span>
-                            <span class="bg-blue-50 text-blue-600 text-xs px-2 py-1 rounded-lg">雲端整合</span>
+                        <div>
+                            <h3 class="text-xl font-bold">上傳功能進階版</h3>
+                            <p class="text-slate-500 text-sm italic">目標：取代原有 Google 雲端介面，提供美觀之管理功能</p>
                         </div>
                     </div>
 
-                    <!-- 2. Line發訊息 -->
-                    <div class="future-card">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="bg-green-100 text-green-600 rounded-xl p-3">
-                                <i class="fa-brands fa-line text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-base">Line 發訊息</h4>
-                                <span class="text-xs text-green-500 font-medium">Line Notify / Messaging API</span>
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+                        <div class="space-y-3">
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider">已完成 (Check)</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 讀出 Google 雲端資料</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 輸入密碼登入</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 圖片影片用元件預覽</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 新增檔案與資料夾功能</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 改檔名、刪除檔案功能</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 刪除改成移動至其他資料夾</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 開啟雲端連結、類別設定檔化</li>
+                                <li class="flex items-center text-slate-600"><i class="fa-solid fa-circle-check text-green-500 mr-3"></i> 更改網址設定</li>
+                            </ul>
                         </div>
-                        <p class="text-sm text-slate-600">透過 Line Notify 或 Messaging API 串接，於特定事件（任務完成、異常警告）時自動推播通知至指定群組或個人。</p>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-lg">Line Notify</span>
-                            <span class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-lg">自動推播</span>
-                            <span class="bg-green-50 text-green-600 text-xs px-2 py-1 rounded-lg">事件觸發</span>
-                        </div>
-                    </div>
-
-                    <!-- 3. 聚會筆記 -->
-                    <div class="future-card">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="bg-amber-100 text-amber-600 rounded-xl p-3">
-                                <i class="fa-solid fa-people-group text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-base">聚會筆記</h4>
-                                <span class="text-xs text-amber-500 font-medium">Meeting Notes</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-slate-600">快速記錄聚會內容、參與人員與待辦事項，支援標籤分類與關鍵字搜尋，並可匯出為 PDF 或同步至 Google Docs。</p>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="bg-amber-50 text-amber-600 text-xs px-2 py-1 rounded-lg">快速記錄</span>
-                            <span class="bg-amber-50 text-amber-600 text-xs px-2 py-1 rounded-lg">標籤分類</span>
-                            <span class="bg-amber-50 text-amber-600 text-xs px-2 py-1 rounded-lg">匯出 PDF</span>
+                        <div class="space-y-3">
+                            <h4 class="text-sm font-bold text-slate-400 uppercase tracking-wider">開發中 (False)</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-center text-slate-800 font-medium bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                    <i class="fa-regular fa-circle text-slate-300 mr-3"></i> 切換圖片預覽模式
+                                </li>
+                                <li class="flex items-center text-slate-800 font-medium bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                    <i class="fa-regular fa-circle text-slate-300 mr-3"></i> 串接 Line 發送訊息
+                                </li>
+                            </ul>
                         </div>
                     </div>
-
-                    <!-- 4. 功能介紹 -->
-                    <div class="future-card">
-                        <div class="flex items-center gap-3 mb-3">
-                            <div class="bg-violet-100 text-violet-600 rounded-xl p-3">
-                                <i class="fa-solid fa-book-open text-xl"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-base">功能介紹</h4>
-                                <span class="text-xs text-violet-500 font-medium">Feature Guide</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-slate-600">建立互動式系統導覽頁面，以步驟式 Onboarding 引導新使用者了解各模組功能，並附上操作截圖與說明文件連結。</p>
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            <span class="bg-violet-50 text-violet-600 text-xs px-2 py-1 rounded-lg">互動導覽</span>
-                            <span class="bg-violet-50 text-violet-600 text-xs px-2 py-1 rounded-lg">Onboarding</span>
-                            <span class="bg-violet-50 text-violet-600 text-xs px-2 py-1 rounded-lg">說明文件</span>
-                        </div>
-                    </div>
-
                 </div>
             </section>
 
-            <!-- 其他連結 -->
             <section id="links" class="tab-content">
                 <h2 class="text-2xl font-bold mb-6">快速連結</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
-                        <i class="fa-brands fa-github text-2xl mb-2"></i>
+                        <i class="fa-brands fa-github text-2xl mb-2 text-slate-800"></i>
                         <div class="text-sm">GitHub Repo</div>
                     </a>
                     <a href="#" class="p-4 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-500 transition-all text-center">
@@ -317,15 +164,37 @@
     </div>
 
     <script>
+        // 切換頁籤
         function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
             document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            
+            // 處理桌面版 active 樣式
+            const activeNavs = document.querySelectorAll(`button[onclick="showTab('${tabId}')"]`);
+            activeNavs.forEach(nav => nav.classList.add('active'));
+
+            // 如果在手機版，切換後自動關閉選單
+            if (window.innerWidth < 768) {
+                toggleMobileMenu();
+            }
+        }
+
+        // 手機版選單開關
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            if (sidebar.classList.contains('sidebar-closed')) {
+                sidebar.classList.remove('sidebar-closed');
+                sidebar.classList.add('sidebar-open');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.remove('sidebar-open');
+                sidebar.classList.add('sidebar-closed');
+                overlay.classList.add('hidden');
+            }
         }
     </script>
 </body>
